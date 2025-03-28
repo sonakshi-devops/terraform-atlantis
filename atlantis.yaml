@@ -1,0 +1,18 @@
+version: 3
+projects:
+  - name: terraform-project
+    dir: .
+    workflow: default
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
+      enabled: true
+
+workflows:
+  default:
+    plan:
+      steps:
+        - init
+        - plan
+    apply:
+      steps:
+        - apply
