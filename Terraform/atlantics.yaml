@@ -1,4 +1,11 @@
 version: 3
 projects:
-  - dir: .
+  - name: my-terraform-project-of-atlantics
+    dir: .
+    workspace: default
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars", "modules/**/*.tf"]
+      enabled: true
+    apply_requirements: ["approved"]
     workflow: default
+
