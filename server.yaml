@@ -1,0 +1,10 @@
+repos:
+  - id: github.com/sonakshi-devops/terraform-atlantis
+    branch: main
+    workflow: default
+    allow_custom_workflows: true
+    workspace: default
+    allowed_overrides: [workflow, apply_requirements]
+    allow_custom_workflows: true
+    pre_workflow_hooks:
+      - run: powershell.exe -Command "C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe version"
