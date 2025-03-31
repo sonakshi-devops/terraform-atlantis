@@ -1,4 +1,8 @@
+
+
 repos:
   - id: github.com/sonakshi-devops/terraform-atlantis
+    workflow: default
     allowed_overrides: [workflow]
     allow_custom_workflows: true
+  
