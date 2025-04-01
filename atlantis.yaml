@@ -1,7 +1,7 @@
 version: 3
 
 repos:
-  - id: /.*/  # Match all repositories
+  - id: github.com/sonakshi-devops/terraform-atlantis # Match all repositories
     pre_workflow_hooks:
       - run: powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& { 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' version }"
         description: "Check Terraform Version"
