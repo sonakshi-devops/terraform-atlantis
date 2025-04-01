@@ -1,4 +1,4 @@
 output "instance_id" {
-  description = "ID of the EC2 instance"
+  description = "ID of a EC2 instance"
   value       = aws_instance.example.id
 }

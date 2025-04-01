@@ -1,7 +1,7 @@
 repos:
   - id: github.com/sonakshi-devops/terraform-atlantis
-    branch: "/^main$/"
-    workflow: windows-workflow
+    branch: "/.*/"  # Sabhi branches ke liye allow
+    workflow: windows-workflow  # Custom workflow use karne ke liye
     allowed_overrides:
       - workflow
       - apply_requirements
