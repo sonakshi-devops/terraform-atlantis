@@ -13,7 +13,7 @@ workflows:
     plan:
       steps:
         # Add pre-workflow hook before running terraform commands
-        - run: ./pre-workflow-hook.sh  # Make sure the path is correct and the script exists
+        - run: "./pre-workflow-hook.bat"  # Corrected path for the batch script
         - run: |
             powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
               Start-Process -NoNewWindow -FilePath 'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' -ArgumentList 'init', '-input=false', '-upgrade'
