@@ -1,12 +1,20 @@
 version: 3
 
-projects:
-  - name: terraform-setup-project
-    dir: "terraform-atlantis"  # Terraform फाइल्स का डायरेक्टरी
-    workflow: windows-workflow
-    autoplan:
-      when_modified: ["*.tf", "*.tfvars"]
-      enabled: true
+repos:
+  - id: /.*/  # Match all repositories
+    pre_workflow_hooks:
+      - run: powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& { 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' version }"
+        description: "Check Terraform Version"
+        commands: plan
+      - run: powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& { 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' version }"
+        description: "Check Terraform Version for Plan & Apply"
+        commands: plan, apply
+      - run: |
+          echo "Generating atlantis.yaml"
+          terragrunt-atlantis-config generate --output atlantis.yaml --autoplan --parallel
+        description: Generating atlantis.yaml
+        shell: bash  # Optional: Only use bash if necessary, otherwise stick to PowerShell
+        shellArgs: -cv
 
 workflows:
   windows-workflow:
@@ -15,9 +23,6 @@ workflows:
         - run: |
             powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
               'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' init -input=false -upgrade
-            }"
-        - run: |
-            powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
               'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' plan
             }"
     apply:
@@ -26,3 +31,11 @@ workflows:
             powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
               'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' apply -auto-approve
             }"
+
+projects:
+  - name: terraform-setup-project
+    dir: "terraform-atlantis"  # Directory where your Terraform files are located
+    workflow: windows-workflow
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
+      enabled: true
