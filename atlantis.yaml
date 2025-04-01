@@ -2,7 +2,7 @@ version: 3
 
 projects:
   - name: terraform-setup-project
-    dir: "terraform-atlantis"  # Directory where your Terraform files are located
+    dir: "terraform-atlantis"  # Terraform फाइल्स का डायरेक्टरी
     workflow: windows-workflow
     autoplan:
       when_modified: ["*.tf", "*.tfvars"]
@@ -12,20 +12,17 @@ workflows:
   windows-workflow:
     plan:
       steps:
-        # Directly running terraform init in PowerShell
         - run: |
             powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
-              Start-Process -NoNewWindow -FilePath 'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' -ArgumentList 'init', '-input=false', '-upgrade'
+              'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' init -input=false -upgrade
             }"
-        # Running terraform plan
         - run: |
             powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
-              Start-Process -NoNewWindow -FilePath 'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' -ArgumentList 'plan'
+              'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' plan
             }"
     apply:
       steps:
-        # Running terraform apply
         - run: |
             powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
-              Start-Process -NoNewWindow -FilePath 'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' -ArgumentList 'apply', '-auto-approve'
+              'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' apply -auto-approve
             }"
