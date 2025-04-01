@@ -7,7 +7,7 @@ repos:
       - apply_requirements
     allow_custom_workflows: true
     pre_workflow_hooks:
-      - run: powershell.exe -Command "& 'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' version"
+  - run: powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe version"
 
 workflows:
   windows-workflow:
