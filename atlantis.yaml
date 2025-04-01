@@ -1,19 +1,28 @@
+version: 3
+
+projects:
+  - name: terraform-setup-project
+    dir: "C:/Users/SharkOps011/Desktop/atlantis-terraform-setup"
+    workflow: windows-workflow  # Custom workflow defined below
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
+      enabled: true
+
 workflows:
   windows-workflow:
     plan:
       steps:
         - run: |
-            powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& { 
+            powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
               Start-Process -NoNewWindow -FilePath 'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' -ArgumentList 'init', '-input=false', '-upgrade'
             }"
         - run: |
-            powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& { 
+            powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
               Start-Process -NoNewWindow -FilePath 'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' -ArgumentList 'plan'
             }"
     apply:
       steps:
         - run: |
-            powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& { 
+            powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
               Start-Process -NoNewWindow -FilePath 'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' -ArgumentList 'apply', '-auto-approve'
             }"
-
