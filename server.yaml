@@ -1,10 +1,29 @@
 repos:
   - id: github.com/sonakshi-devops/terraform-atlantis
-    branch: main
-    workflow: default
-    allow_custom_workflows: true
-    workspace: default
-    allowed_overrides: [workflow, apply_requirements]
+    branch: "/.*/"  # Sabhi branches ke liye allow
+    workflow: windows-workflow  # Custom workflow use karne ke liye
+    allowed_overrides:
+      - workflow
+      - apply_requirements
     allow_custom_workflows: true
     pre_workflow_hooks:
-      - run: powershell.exe -Command "C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe version"
+      - run: powershell.exe -Command "& 'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' version"
+
+workflows:
+  windows-workflow:
+    plan:
+      steps:
+        - run: |
+            powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& { 
+              Start-Process -NoNewWindow -FilePath 'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' -ArgumentList 'init', '-input=false', '-upgrade'
+            }"
+        - run: |
+            powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& { 
+              Start-Process -NoNewWindow -FilePath 'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' -ArgumentList 'plan'
+            }"
+    apply:
+      steps:
+        - run: |
+            powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& { 
+              Start-Process -NoNewWindow -FilePath 'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' -ArgumentList 'apply', '-auto-approve'
+            }"
