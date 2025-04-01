@@ -1,13 +1,13 @@
 version: 3
 
 pre_workflow_hooks:
-  - run: powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& { & 'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' version }"
+  - run: powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& { & 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' version }"
     description: "Check Terraform Version"
     commands: plan, apply
   - run: |
       echo "Generating atlantis.yaml"
       terragrunt-atlantis-config generate --output atlantis.yaml --autoplan --parallel
-    description: Generating atlantis.yaml
+    description: "Generating atlantis.yaml"
     shell: bash
 
 workflows:
@@ -15,13 +15,13 @@ workflows:
     plan:
       steps:
         - run: powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
-            & 'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' init -input=false -upgrade
-            & 'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' plan
+            & 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' init -input=false -upgrade
+            & 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' plan
           }"
     apply:
       steps:
         - run: powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
-            & 'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' apply -auto-approve
+            & 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' apply -auto-approve
           }"
 
 projects:
