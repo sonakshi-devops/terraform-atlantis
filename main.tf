@@ -7,6 +7,7 @@ resource "aws_instance" "example" {
   instance_type = "var.instance_type"
 
   tags = {
-    Name = "Atlantis-Terraform-new-Instance"
+    Name = "Atlantis-Terraform-Instance"
   }
 }
+
