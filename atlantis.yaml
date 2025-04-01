@@ -13,24 +13,18 @@ workflows:
     plan:
       steps:
         # Add pre-workflow hook before running terraform commands
-        - run: "C:/Users/SharkOps011/Desktop/atlantis-terraform-setup/pre-workflow-hook.bat"  # Full path for batch script
-
-        # Run terraform init using the specified path for terraform executable
+        - run: "./pre-workflow-hook.bat"  # Corrected path for the batch script
         - run: |
             powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
-              Start-Process -NoNewWindow -FilePath 'C:/Users/SharkOps011/Downloads/terraform_1.11.0_windows_386/terraform.exe' -ArgumentList 'init', '-input=false', '-upgrade'
+              Start-Process -NoNewWindow -FilePath 'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' -ArgumentList 'init', '-input=false', '-upgrade'
             }"
-        
-        # Run terraform plan using the specified path for terraform executable
         - run: |
             powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
-              Start-Process -NoNewWindow -FilePath 'C:/Users/SharkOps011/Downloads/terraform_1.11.0_windows_386/terraform.exe' -ArgumentList 'plan'
+              Start-Process -NoNewWindow -FilePath 'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' -ArgumentList 'plan'
             }"
-
     apply:
       steps:
-        # Run terraform apply using the specified path for terraform executable
         - run: |
             powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
-              Start-Process -NoNewWindow -FilePath 'C:/Users/SharkOps011/Downloads/terraform_1.11.0_windows_386/terraform.exe' -ArgumentList 'apply', '-auto-approve'
+              Start-Process -NoNewWindow -FilePath 'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' -ArgumentList 'apply', '-auto-approve'
             }"
