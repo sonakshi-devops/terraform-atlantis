@@ -2,7 +2,7 @@ version: 3
 
 projects:
   - name: terraform-setup-project
-    dir: "."  # Correct directory where your Terraform configuration files are located
+    dir: "terraform-atlantis"  # Correct directory where your Terraform configuration files are located
     workflow: windows-workflow  # Custom workflow defined below
     autoplan:
       when_modified: ["*.tf", "*.tfvars"]
