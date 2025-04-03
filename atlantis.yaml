@@ -6,14 +6,15 @@ workflows:
       steps:
         - run: >
             powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
+              & 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' version;
               & 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' init -input=false -upgrade;
-              & 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' plan
+              & 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' plan -out=tfplan
             }"
     apply:
       steps:
         - run: >
             powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
-              & 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' apply -auto-approve
+              & 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' apply -auto-approve tfplan
             }"
 
 projects:
