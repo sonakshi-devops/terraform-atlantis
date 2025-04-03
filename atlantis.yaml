@@ -1,34 +1,23 @@
-version: 3
+repos:
+  - id: "github.com/sonakshi-devops/terraform-atlantis"
+    allowed_overrides: [workflow]
+    allow_custom_workflows: true
+    apply_requirements: [approved]
+    # pre_workflow_hooks हटा दिए गए हैं ताकि Terraform version check न हो
+    workflow: "windows-workflow"
 
 workflows:
   windows-workflow:
     plan:
       steps:
-        - run: >
+        - run: |
             powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
-              Write-Output 'Checking Terraform Version...';
-              try {
-                & 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' version;
-              } catch {
-                Write-Output 'Terraform version check failed, continuing...';
-              }
-              Write-Output 'Initializing Terraform...';
-              & 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' init -input=false -upgrade;
-              Write-Output 'Running Terraform Plan...';
-              & 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' plan -out=tfplan;
+              & \"C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe\" init -input=false -upgrade;
+              & \"C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe\" plan
             }"
     apply:
       steps:
-        - run: >
+        - run: |
             powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
-              Write-Output 'Applying Terraform Plan...';
-              & 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' apply -auto-approve tfplan;
+              & \"C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe\" apply -auto-approve
             }"
-
-projects:
-  - name: terraform-setup-project
-    dir: "terraform-atlantis"
-    workflow: windows-workflow
-    autoplan:
-      when_modified: ["*.tf", "*.tfvars"]
-      enabled: true
