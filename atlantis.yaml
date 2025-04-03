@@ -1,4 +1,5 @@
 version: 3
+
 projects:
   - name: terraform-setup-project
     dir: terraform-atlantis
