@@ -1,10 +1,11 @@
-repos:
-  - id: "github.com/sonakshi-devops/terraform-atlantis"
-    allowed_overrides: [workflow]
-    allow_custom_workflows: true
-    apply_requirements: [approved]
-    # pre_workflow_hooks हटा दिए गए हैं ताकि Terraform version check न हो
-    workflow: "windows-workflow"
+version: 3
+projects:
+  - name: terraform-setup-project
+    dir: terraform-atlantis
+    workflow: windows-workflow
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
+      enabled: true
 
 workflows:
   windows-workflow:
