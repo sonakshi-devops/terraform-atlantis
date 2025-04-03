@@ -1,13 +1,15 @@
 repos:
-  - id: "github.com/sonakshi-devops/terraform-atlantis"  # Specify your GitHub repository
-    workflows:
-      windows-workflow:
-        plan:
-          steps:
-            - run: "powershell.exe -ExecutionPolicy Bypass -NoProfile -Command \"& { 'C:\\path\\to\\terraform.exe' plan }\""
-        apply:
-          steps:
-            - run: "powershell.exe -ExecutionPolicy Bypass -NoProfile -Command \"& { 'C:\\path\\to\\terraform.exe' apply -auto-approve }\""
+  - id: "github.com/sonakshi-devops/terraform-atlantis"
+    allowed_overrides: [workflow]
+    allow_custom_workflows: true
+    apply_requirements: [approved]
+    pre_workflow_hooks:
+      - run: |
+          powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
+            & \"C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe\" version
+          }"
+        description: "Check Terraform Version"
+    workflow: "windows-workflow"
 
 workflows:
   windows-workflow:
@@ -15,20 +17,12 @@ workflows:
       steps:
         - run: |
             powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
-              'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' init -input=false -upgrade
-              'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' plan
+              & \"C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe\" init -input=false -upgrade
+              & \"C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe\" plan
             }"
     apply:
       steps:
         - run: |
             powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
-              'C:\Users\SharkOps011\Downloads\terraform_1.11.0_windows_386\terraform.exe' apply -auto-approve
+              & \"C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe\" apply -auto-approve
             }"
-
-projects:
-  - name: terraform-setup-project
-    dir: "terraform-atlantis"  # Directory where your Terraform files are located
-    workflow: windows-workflow
-    autoplan:
-      when_modified: ["*.tf", "*.tfvars"]
-      enabled: true
