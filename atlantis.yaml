@@ -7,7 +7,11 @@ workflows:
         - run: >
             powershell.exe -ExecutionPolicy Bypass -NoProfile -Command "& {
               Write-Output 'Checking Terraform Version...';
-              & 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' version;
+              try {
+                & 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' version;
+              } catch {
+                Write-Output 'Terraform version check failed, continuing...';
+              }
               Write-Output 'Initializing Terraform...';
               & 'C:\\Users\\SharkOps011\\Downloads\\terraform_1.11.0_windows_386\\terraform.exe' init -input=false -upgrade;
               Write-Output 'Running Terraform Plan...';
